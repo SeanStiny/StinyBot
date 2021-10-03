@@ -1,0 +1,31 @@
+{
+  "name": "stinybot",
+  "version": "0.0.0",
+  "description": "A Twitch bot for twitch.tv/SeanStiny and friends.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SeanStiny/StinyBot.git"
+  },
+  "author": "SeanStiny",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/SeanStiny/StinyBot/issues"
+  },
+  "homepage": "https://github.com/SeanStiny/StinyBot#readme",
+  "devDependencies": {
+    "@types/node": "^16.10.2",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.3"
+  }
+}
