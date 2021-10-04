@@ -5,7 +5,7 @@ import { collections } from '../database';
  * A Twitch chat channel.
  */
 export class Channel {
-  constructor(public name: string, public _id: ObjectId) {}
+  constructor(public name: string, readonly _id: ObjectId) {}
 }
 
 /**
