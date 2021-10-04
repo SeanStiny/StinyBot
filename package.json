@@ -20,6 +20,7 @@
   "homepage": "https://github.com/SeanStiny/StinyBot#readme",
   "devDependencies": {
     "@types/node": "^16.10.2",
+    "@types/tmi.js": "^1.7.2",
     "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.32.0",
     "eslint": "^7.32.0",
@@ -27,5 +28,10 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",
     "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "tmi.js": "^1.8.5",
+    "winston": "^3.3.3"
   }
 }
