@@ -1,7 +1,7 @@
 import { chat } from './chat';
 import { chatMessage } from './listeners/chat-message';
-import { join } from './listeners/join';
-import { logon } from './listeners/logon';
+import { chatJoin } from './listeners/chat-join';
+import { chatConnected } from './listeners/chat-connected';
 import { logger } from './logger';
 
 // Connect to chat
@@ -11,5 +11,5 @@ chat.connect().catch((error) => {
 
 // Listen for chat events.
 chat.on('chat', chatMessage);
-chat.on('logon', logon);
-chat.on('join', join);
+chat.on('connected', chatConnected);
+chat.on('join', chatJoin);

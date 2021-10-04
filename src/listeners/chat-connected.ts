@@ -2,8 +2,8 @@ import { config } from '../config';
 import { logger } from '../logger';
 
 /**
- * Listen for a chat logon event.
+ * Listen for a chat connected event.
  */
-export function logon(): void {
+export async function chatConnected(): Promise<void> {
   logger.info(`Logged into chat as '${config.user}'`);
 }

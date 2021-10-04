@@ -5,5 +5,11 @@ import { config } from './config';
  * TMI chat client.
  */
 export const chat = Client({
-  identity: { username: config.user, password: config.pass },
+  options: {
+    debug: config.logLevel === 'debug',
+  },
+  identity: {
+    username: config.user,
+    password: config.pass,
+  },
 });
