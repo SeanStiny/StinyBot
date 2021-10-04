@@ -1,5 +1,8 @@
 import { Client } from 'tmi.js';
 import { config } from './config';
+import { chatConnected } from './listeners/chat-connected';
+import { chatJoin } from './listeners/chat-join';
+import { chatMessage } from './listeners/chat-message';
 
 /**
  * TMI chat client.
@@ -13,3 +16,8 @@ export const chat = Client({
     password: config.pass,
   },
 });
+
+// Listen for chat events.
+chat.on('chat', chatMessage);
+chat.on('connected', chatConnected);
+chat.on('join', chatJoin);
