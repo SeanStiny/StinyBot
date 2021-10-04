@@ -13,5 +13,4 @@ export const config = {
   // Twitch chat
   user: process.env.USER || `justinfan${Math.floor(Math.random() * 9999)}`,
   pass: process.env.PASS || '',
-  channels: process.env.CHANNELS?.split(',') || [],
 };
