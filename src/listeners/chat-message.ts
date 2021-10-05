@@ -1,6 +1,6 @@
 import { ChatUserstate } from 'tmi.js';
 import { chat } from '../chat';
-import { adminCommands, userCommands } from '../commands';
+import { adminCommands, botCommands } from '../commands';
 import { config } from '../config';
 import { logger } from '../logger';
 
@@ -29,7 +29,7 @@ export async function chatMessage(
 
   // Look for and execute a chat command.
   let response: string | undefined;
-  const commands = inAdminChannel ? adminCommands : userCommands;
+  const commands = inAdminChannel ? adminCommands : botCommands;
   const command = commands[args[0]];
   if (command) {
     const userHasPermission =

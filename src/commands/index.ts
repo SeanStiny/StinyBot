@@ -1,15 +1,11 @@
 import { ChatUserstate } from 'tmi.js';
-import { config } from '../config';
-import { botCommand } from './bot-command';
 import { joinCommand } from './join-command';
 import { leaveCommand } from './leave-command';
 
 /**
  * Commands that can be called from a user's chat.
  */
-export const userCommands: Record<string, Command> = {
-  [`!${config.user.toLowerCase()}`]: botCommand,
-};
+export const botCommands: Record<string, Command> = {};
 
 /**
  * Commands that can be called from the bot's own chat.
