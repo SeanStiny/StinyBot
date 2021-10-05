@@ -1,10 +1,23 @@
 import { Collection, MongoClient } from 'mongodb';
 import { config } from './config';
+import { Channel } from './models/channel';
 
 /**
  * The database collections.
  */
-export let collections: { channels?: Collection } = {};
+let collections: {
+  channels?: Collection<Channel>;
+} = {};
+
+/**
+ * @returns The channels collection.
+ */
+export function channelCollection(): Collection<Channel> {
+  if (collections.channels === undefined) {
+    throw 'Connect to the database before calling channels()';
+  }
+  return collections.channels;
+}
 
 // Set up the database client.
 const client = new MongoClient(config.dbUri);
