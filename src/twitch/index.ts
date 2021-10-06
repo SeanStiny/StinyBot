@@ -1,6 +1,6 @@
-import { channel } from './channel';
-import { streams } from './streams';
-import { users } from './users';
+import { channel } from './twitch-channel';
+import { streams } from './twitch-streams';
+import { users } from './twitch-users';
 
 /**
  * Twitch API endpoints.
