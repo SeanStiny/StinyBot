@@ -1,23 +1,15 @@
 import { Collection, MongoClient } from 'mongodb';
 import { config } from './config';
 import { Channel } from './models/channel';
+import { Command } from './models/command';
 
 /**
  * The database collections.
  */
-let collections: {
+export let collections: {
   channels?: Collection<Channel>;
+  commands?: Collection<Command>;
 } = {};
-
-/**
- * @returns The channels collection.
- */
-export function channelCollection(): Collection<Channel> {
-  if (collections.channels === undefined) {
-    throw 'Connect to the database before calling channels()';
-  }
-  return collections.channels;
-}
 
 // Set up the database client.
 const client = new MongoClient(config.dbUri);
@@ -31,8 +23,13 @@ export async function connectToDatabase(): Promise<void> {
 
   collections = {
     channels: db.collection('channels'),
+    commands: db.collection('commands'),
   };
 
   // Create indexes
   collections.channels?.createIndex({ name: 1 }, { unique: true });
+  collections.commands?.createIndex(
+    { channelId: 1, trigger: 1 },
+    { unique: true }
+  );
 }

@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { channelCollection } from '../database';
+import { collections } from '../database';
 
 /**
  * A Twitch chat channel.
@@ -16,15 +16,15 @@ export class Channel {
  * @param channel The new channel to insert into the database.
  */
 export async function insertChannel(channel: Channel): Promise<boolean> {
-  const result = await channelCollection().insertOne(channel);
-  return result.acknowledged;
+  const result = await collections.channels?.insertOne(channel);
+  return result?.acknowledged || false;
 }
 
 /**
  * @returns An array containing every channel stored in the database.
  */
 export async function allChannels(): Promise<Channel[]> {
-  return await channelCollection().find({}).toArray();
+  return (await collections.channels?.find({}).toArray()) || [];
 }
 
 /**
@@ -32,7 +32,7 @@ export async function allChannels(): Promise<Channel[]> {
  */
 export async function findChannelByName(name: string): Promise<Channel | null> {
   name = sanitizeName(name);
-  return await channelCollection().findOne({ name });
+  return (await collections.channels?.findOne({ name })) || null;
 }
 
 /**
@@ -40,8 +40,8 @@ export async function findChannelByName(name: string): Promise<Channel | null> {
  */
 export async function deleteChannel(name: string): Promise<boolean> {
   name = sanitizeName(name);
-  const result = await channelCollection().deleteOne({ name });
-  return result.acknowledged;
+  const result = await collections.channels?.deleteOne({ name });
+  return result?.acknowledged || false;
 }
 
 /**

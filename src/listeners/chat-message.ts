@@ -1,8 +1,9 @@
 import { ChatUserstate } from 'tmi.js';
+import { adminActions, userActions } from '../actions';
 import { chat } from '../chat';
-import { adminCommands, botCommands } from '../commands';
 import { config } from '../config';
 import { logger } from '../logger';
+import { findCommand } from '../models/command';
 
 /**
  * Listen for a chat message event.
@@ -21,6 +22,7 @@ export async function chatMessage(
   logger.info(`${channel} [${userstate['display-name']}]: ${message}`);
 
   // User information.
+  const userIsBroadcaster = userstate.badges?.broadcaster !== undefined;
   const userIsMod = userstate.badges?.moderator !== undefined;
   const userIsVip = userstate.badges?.vip !== undefined;
   const userIsSub = userstate.badges?.subscriber !== undefined;
@@ -29,15 +31,30 @@ export async function chatMessage(
 
   // Look for and execute a chat command.
   let response: string | undefined;
-  const commands = inAdminChannel ? adminCommands : botCommands;
-  const command = commands[args[0]];
-  if (command) {
-    const userHasPermission =
-      (!command.isModOnly || userIsMod) &&
-      (!command.isVipOnly || userIsVip) &&
-      (!command.isSubOnly || userIsSub);
-    if (userHasPermission) {
-      response = await command.execute(args, channel, userstate, message);
+
+  if (inAdminChannel) {
+    // Admin commands
+    if (userIsMod) {
+      const action = adminActions[args[0].toLowerCase()];
+      if (action !== undefined) {
+        response = await action(args, channel, userstate, message);
+      }
+    }
+  } else {
+    // User commands
+    const channelId = parseInt(userstate['room-id'] || '-1');
+    const command = await findCommand(channelId, args[0].toLowerCase());
+
+    if (command !== null) {
+      const userHasPermission =
+        userIsBroadcaster ||
+        (command.opts?.isMod && userIsMod) ||
+        (command.opts?.isVip && userIsVip) ||
+        (command.opts?.isSub && userIsSub);
+      if (userHasPermission) {
+        const action = userActions[command.action.kind];
+        response = await action(args, channel, userstate, message, command);
+      }
     }
   }
 
