@@ -20,7 +20,7 @@ export const adminActions: Record<string, AdminAction> = {
 };
 
 /**
- * A chat command.
+ * An action performed in response to a chat command.
  */
 export type Action = (
   args: string[],
@@ -30,6 +30,9 @@ export type Action = (
   command: Command
 ) => Promise<string>;
 
+/**
+ * A bot admin chat action.
+ */
 export type AdminAction = (
   args: string[],
   channel: string,
