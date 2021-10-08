@@ -1,11 +1,11 @@
-import { AdminAction } from '.';
+import { BuiltInCommand } from '.';
 import { chat } from '../chat';
 import { deleteChannel } from '../models/channel';
 
 /**
  * Leave a channel.
  */
-export const leaveAction: AdminAction = async (args) => {
+export const leaveCommand: BuiltInCommand = async (args) => {
   if (args.length > 1) {
     const channelName = args[1];
 

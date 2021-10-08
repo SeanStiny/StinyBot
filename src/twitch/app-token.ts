@@ -9,7 +9,7 @@ export async function appToken(): Promise<string> {
     await generateAppToken();
   }
 
-  // For safety. This shouldn't happen unless something went wrong.
+  // If something went wrong.
   if (appAuth.accessToken === undefined) {
     throw 'appAuth.accessToken is undefined';
   }

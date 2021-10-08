@@ -10,3 +10,7 @@ export const twitch = {
   streams,
   users,
 };
+
+export { ChannelData } from './twitch-channel';
+export { StreamData } from './twitch-streams';
+export { UserData } from './twitch-users';

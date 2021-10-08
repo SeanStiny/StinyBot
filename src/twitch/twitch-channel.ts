@@ -6,7 +6,7 @@ import { appToken } from './app-token';
  * Fetch information about a channel.
  * @param login The broadcaster's Twitch ID.
  */
-export async function channel(broadcasterId: number): Promise<ChannelData[]> {
+export async function channel(broadcasterId: number): Promise<ChannelData> {
   const bearer = await appToken();
 
   const response = await axios.get<{ data: ChannelData[] }>(
@@ -18,14 +18,15 @@ export async function channel(broadcasterId: number): Promise<ChannelData[]> {
       },
     }
   );
-  return response.data.data;
+  return response.data.data[0];
 }
 
 /**
  * Information about a channel.
  */
-interface ChannelData {
+export interface ChannelData {
   broadcaster_id: string;
+  broadcaster_login: string;
   broadcaster_name: string;
   game_name: string;
   game_id: string;

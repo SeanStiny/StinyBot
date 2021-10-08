@@ -1,11 +1,11 @@
-import { AdminAction } from '.';
+import { BuiltInCommand } from '.';
 import { chat } from '../chat';
 import { Channel, insertChannel } from '../models/channel';
 
 /**
  * Join a channel.
  */
-export const joinAction: AdminAction = async (args) => {
+export const joinCommand: BuiltInCommand = async (args) => {
   if (args.length > 1) {
     const channelName = args[1];
 

@@ -28,7 +28,7 @@ export async function streams(logins: string[]): Promise<StreamData[]> {
 /**
  * Information about a currently live stream.
  */
-interface StreamData {
+export interface StreamData {
   id: number;
   user_id: string;
   user_login: string;

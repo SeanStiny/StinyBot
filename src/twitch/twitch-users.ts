@@ -28,7 +28,7 @@ export async function users(logins: string[]): Promise<UserData[]> {
 /**
  * Information about a Twitch user.
  */
-interface UserData {
+export interface UserData {
   broadcaster_type: string;
   description: string;
   display_name: string;

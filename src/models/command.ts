@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongodb';
 import { collections } from '../database';
-import { RespondOptions } from './commands/respond-command';
 
 /**
  * A chat command that performs an action when triggered.
@@ -8,7 +7,7 @@ import { RespondOptions } from './commands/respond-command';
 export interface Command {
   channelId: number;
   trigger: string;
-  action: ActionOptions;
+  response: string;
   opts?: {
     isMod?: boolean;
     isVip?: boolean;
@@ -55,10 +54,3 @@ export async function deleteCommand(
   const result = await collections.commands?.deleteOne({ channelId, trigger });
   return result?.acknowledged || false;
 }
-
-export { RespondCommand } from './commands/respond-command';
-
-/**
- * The type of action the command should perform.
- */
-export type ActionOptions = RespondOptions;

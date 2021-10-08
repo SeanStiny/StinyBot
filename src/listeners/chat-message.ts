@@ -1,5 +1,5 @@
 import { ChatUserstate } from 'tmi.js';
-import { adminActions, userActions } from '../actions';
+import { adminCommands, botCommands } from '../commands';
 import { chat } from '../chat';
 import { config } from '../config';
 import { logger } from '../logger';
@@ -35,25 +35,30 @@ export async function chatMessage(
   if (inAdminChannel) {
     // Admin commands
     if (userIsMod) {
-      const action = adminActions[args[0].toLowerCase()];
-      if (action !== undefined) {
-        response = await action(args, channel, userstate, message);
+      const adminCommand = adminCommands[args[0].toLowerCase()];
+      if (adminCommand !== undefined) {
+        response = await adminCommand(args, channel, userstate, message);
       }
     }
   } else {
-    // User commands
-    const channelId = parseInt(userstate['room-id'] || '-1');
-    const command = await findCommand(channelId, args[0].toLowerCase());
+    // Bot commands
+    const botCommand = botCommands[args[0]];
+    if (botCommand && (userIsBroadcaster || userIsMod)) {
+      response = await botCommand(args, channel, userstate, message);
+    } else {
+      // User commands
+      const channelId = parseInt(userstate['room-id'] || '-1');
+      const command = await findCommand(channelId, args[0].toLowerCase());
 
-    if (command !== null) {
-      const userHasPermission =
-        userIsBroadcaster ||
-        (command.opts?.isMod && userIsMod) ||
-        (command.opts?.isVip && userIsVip) ||
-        (command.opts?.isSub && userIsSub);
-      if (userHasPermission) {
-        const action = userActions[command.action.kind];
-        response = await action(args, channel, userstate, message, command);
+      if (command !== null) {
+        const userHasPermission =
+          userIsBroadcaster ||
+          (command.opts?.isMod && userIsMod) ||
+          (command.opts?.isVip && userIsVip) ||
+          (command.opts?.isSub && userIsSub);
+        if (userHasPermission) {
+          response = command.response;
+        }
       }
     }
   }
