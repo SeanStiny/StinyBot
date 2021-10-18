@@ -4,6 +4,8 @@ import { chat } from '../chat';
 import { config } from '../config';
 import { logger } from '../logger';
 import { findCommand } from '../models/command';
+import { createCommandContext } from '../variables/command-context';
+import { parseResponse } from '../response';
 
 /**
  * Listen for a chat message event.
@@ -53,11 +55,15 @@ export async function chatMessage(
       if (command !== null) {
         const userHasPermission =
           userIsBroadcaster ||
+          (!command.opts?.isMod &&
+            !command.opts?.isSub &&
+            !command.opts?.isVip) ||
           (command.opts?.isMod && userIsMod) ||
           (command.opts?.isVip && userIsVip) ||
           (command.opts?.isSub && userIsSub);
         if (userHasPermission) {
-          response = command.response;
+          const variables = createCommandContext(channel, userstate, message);
+          response = await parseResponse(command.response, variables);
         }
       }
     }
