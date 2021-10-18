@@ -7,22 +7,34 @@ import { appToken } from './app-token';
  * @param logins The login names for each streamer to find.
  */
 export async function streams(logins: string[]): Promise<StreamData[]> {
-  const bearer = await appToken();
-  const userLoginQueries: string[] = [];
-  logins.forEach((login) => {
-    userLoginQueries.push(`user_login=${login}`);
-  });
+  const cached = streamCache[logins[0]];
+  if (logins.length === 1 && cached && cached.expires > Date.now()) {
+    return [cached.data];
+  } else {
+    const bearer = await appToken();
+    const userLoginQueries: string[] = [];
+    logins.forEach((login) => {
+      userLoginQueries.push(`user_login=${login}`);
+    });
 
-  const response = await axios.get<{ data: StreamData[] }>(
-    `https://api.twitch.tv/helix/streams?${userLoginQueries.join('&')}`,
-    {
-      headers: {
-        Authorization: `Bearer ${bearer}`,
-        'Client-Id': config.clientId,
-      },
-    }
-  );
-  return response.data.data;
+    const response = await axios.get<{ data: StreamData[] }>(
+      `https://api.twitch.tv/helix/streams?${userLoginQueries.join('&')}`,
+      {
+        headers: {
+          Authorization: `Bearer ${bearer}`,
+          'Client-Id': config.clientId,
+        },
+      }
+    );
+
+    // Cache the streams.
+    const now = Date.now();
+    response.data.data.forEach((data) => {
+      streamCache[data.user_login] = { expires: now + 5000, data };
+    });
+
+    return response.data.data;
+  }
 }
 
 /**
@@ -44,3 +56,24 @@ export interface StreamData {
   tag_ids: string[];
   is_mature: boolean;
 }
+
+// Caching
+const streamCache: Record<string, StreamCache> = {};
+
+interface StreamCache {
+  data: StreamData;
+  expires: number;
+}
+
+function clearExpiredCache() {
+  Object.keys(streamCache).forEach((login) => {
+    const cachedStream = streamCache[login];
+    if (cachedStream.expires <= Date.now()) {
+      delete streamCache[login];
+    }
+  });
+}
+
+setInterval(() => {
+  clearExpiredCache();
+}, 10000).unref();
