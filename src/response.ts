@@ -1,5 +1,5 @@
 import { StringReader } from './utils/StringReader';
-import { VariableCollection } from './variables/variable-context';
+import { Variable } from './variables/Variable';
 
 /**
  * @param input The unparsed response string.
@@ -8,7 +8,7 @@ import { VariableCollection } from './variables/variable-context';
  */
 export async function parseResponse(
   input: string,
-  variables: VariableCollection
+  variables: Record<string, Variable>
 ): Promise<string> {
   const tokens = tokenize(input);
   return await parseTokens(tokens, variables);
@@ -20,23 +20,25 @@ export async function parseResponse(
  */
 async function parseTokens(
   tokens: Token[],
-  variables: VariableCollection
+  variables: Record<string, Variable>
 ): Promise<string> {
   let output = '';
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
+    let value = undefined;
+
     if (token.kind === 'text') {
-      output += token.text;
+      value = token.text;
     } else if (token.kind === 'variable') {
       const key = await parseTokens(token.tokens, variables);
-      const value = await variables.valueOf(key.toLowerCase());
-      if (value !== undefined) {
-        output += value;
-      } else {
-        output += 'undefined';
+      const variable = variables[key.toLowerCase()];
+      if (variable) {
+        value = await variable.fetchValue();
       }
     }
+
+    output += value;
   }
 
   return output;
