@@ -2,6 +2,7 @@ import { Collection, MongoClient } from 'mongodb';
 import { config } from './config';
 import { Channel } from './models/channel';
 import { Command } from './models/command';
+import { Splatoon2Rotation } from './models/splatoon2-rotation';
 
 /**
  * The database collections.
@@ -9,6 +10,9 @@ import { Command } from './models/command';
 export let collections: {
   channels?: Collection<Channel>;
   commands?: Collection<Command>;
+  league?: Collection<Splatoon2Rotation>;
+  ranked?: Collection<Splatoon2Rotation>;
+  turf?: Collection<Splatoon2Rotation>;
 } = {};
 
 // Set up the database client.
@@ -24,6 +28,9 @@ export async function connectToDatabase(): Promise<void> {
   collections = {
     channels: db.collection('channels'),
     commands: db.collection('commands'),
+    league: db.collection('league'),
+    ranked: db.collection('ranked'),
+    turf: db.collection('turf'),
   };
 
   // Create indexes
@@ -32,4 +39,7 @@ export async function connectToDatabase(): Promise<void> {
     { channelId: 1, trigger: 1 },
     { unique: true }
   );
+  collections.league?.createIndex({ start_time: 1, end_time: -1 });
+  collections.ranked?.createIndex({ start_time: 1, end_time: -1 });
+  collections.turf?.createIndex({ start_time: 1, end_time: -1 });
 }
