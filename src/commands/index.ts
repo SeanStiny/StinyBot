@@ -1,6 +1,6 @@
 import { ChatUserstate } from 'tmi.js';
-import { joinCommand } from './join-command';
-import { leaveCommand } from './leave-command';
+import { join } from './join';
+import { leave } from './leave';
 
 /**
  * Built-in commands that can be called from a user's chat.
@@ -11,8 +11,8 @@ export const botCommands: Record<string, BuiltInCommand> = {};
  * Built-in commands that can be performed from the bot's own chat.
  */
 export const adminCommands: Record<string, BuiltInCommand> = {
-  '!join': joinCommand,
-  '!leave': leaveCommand,
+  '!join': join,
+  '!leave': leave,
 };
 
 /**

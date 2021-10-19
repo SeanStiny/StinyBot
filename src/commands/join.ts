@@ -5,7 +5,7 @@ import { Channel, insertChannel } from '../models/channel';
 /**
  * Join a channel.
  */
-export const joinCommand: BuiltInCommand = async (args) => {
+export const join: BuiltInCommand = async (args) => {
   if (args.length > 1) {
     const channelName = args[1];
 

@@ -5,7 +5,7 @@ import { deleteChannel } from '../models/channel';
 /**
  * Leave a channel.
  */
-export const leaveCommand: BuiltInCommand = async (args) => {
+export const leave: BuiltInCommand = async (args) => {
   if (args.length > 1) {
     const channelName = args[1];
 
