@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { config } from '../config';
 import { appToken } from './app-token';
+import { isValidLogin } from './validate-login';
 
 /**
  * Fetch currently live streams.
@@ -14,26 +15,32 @@ export async function streams(logins: string[]): Promise<StreamData[]> {
     const bearer = await appToken();
     const userLoginQueries: string[] = [];
     logins.forEach((login) => {
-      userLoginQueries.push(`user_login=${login}`);
-    });
-
-    const response = await axios.get<{ data: StreamData[] }>(
-      `https://api.twitch.tv/helix/streams?${userLoginQueries.join('&')}`,
-      {
-        headers: {
-          Authorization: `Bearer ${bearer}`,
-          'Client-Id': config.clientId,
-        },
+      if (isValidLogin(login)) {
+        userLoginQueries.push(`user_login=${login.toLowerCase()}`);
       }
-    );
-
-    // Cache the streams.
-    const now = Date.now();
-    response.data.data.forEach((data) => {
-      streamCache[data.user_login] = { expires: now + 5000, data };
     });
 
-    return response.data.data;
+    if (userLoginQueries.length > 0) {
+      const response = await axios.get<{ data: StreamData[] }>(
+        `https://api.twitch.tv/helix/streams?${userLoginQueries.join('&')}`,
+        {
+          headers: {
+            Authorization: `Bearer ${bearer}`,
+            'Client-Id': config.clientId,
+          },
+        }
+      );
+
+      // Cache the streams.
+      const now = Date.now();
+      response.data.data.forEach((data) => {
+        streamCache[data.user_login] = { expires: now + 5000, data };
+      });
+
+      return response.data.data;
+    } else {
+      return [];
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 import { StringReader } from './utils/StringReader';
-import { Variable } from './variables/Variable';
+import { Variable } from './variables';
 
 /**
  * @param input The unparsed response string.
