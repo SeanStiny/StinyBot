@@ -1,7 +1,7 @@
 import { Variable } from '.';
 import { twitch } from '../twitch';
 
-export class TwitchNameVariable implements Variable {
+export class ChannelNameVariable implements Variable {
   constructor(private channelId: number) {}
 
   async fetchValue(): Promise<string | undefined> {
