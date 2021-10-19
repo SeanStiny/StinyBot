@@ -8,8 +8,8 @@ export class StringReader {
     this.i = -1;
   }
 
-  peek(k: number): string {
-    return this.input.charAt(this.i + k);
+  peek(start: number, end = start): string {
+    return this.input.substring(this.i + start, this.i + end + 1);
   }
 
   consume(k: number): string {
