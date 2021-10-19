@@ -39,7 +39,16 @@ export async function connectToDatabase(): Promise<void> {
     { channelId: 1, trigger: 1 },
     { unique: true }
   );
-  collections.league?.createIndex({ start_time: 1, end_time: -1 });
-  collections.ranked?.createIndex({ start_time: 1, end_time: -1 });
-  collections.turf?.createIndex({ start_time: 1, end_time: -1 });
+  collections.league?.createIndex(
+    { start_time: 1, end_time: -1 },
+    { unique: true }
+  );
+  collections.ranked?.createIndex(
+    { start_time: 1, end_time: -1 },
+    { unique: true }
+  );
+  collections.turf?.createIndex(
+    { start_time: 1, end_time: -1 },
+    { unique: true }
+  );
 }
