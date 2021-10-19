@@ -4,21 +4,40 @@ import { collections } from '../database';
 /**
  * A chat command that performs an action when triggered.
  */
-export interface Command {
-  channelId: number;
-  trigger: string;
-  response: string;
-  opts?: {
-    isMod?: boolean;
-    isVip?: boolean;
-    isSub?: boolean;
-    cooldown?: number;
-  };
-  _id?: ObjectId;
+export class Command {
+  public lastUsed?: number;
+
+  constructor(
+    public channelId: number,
+    public trigger: string,
+    public response: string,
+    public flags?: CommandFlags,
+    public _id?: ObjectId
+  ) {
+    this.trigger = trigger.toLowerCase();
+  }
 }
 
 /**
- * Updates a command. If the command doesn't exist, it will be inserted.
+ * Command flags.
+ */
+export interface CommandFlags {
+  isMod?: boolean;
+  isVip?: boolean;
+  isSub?: boolean;
+  cooldown?: number;
+}
+
+/**
+ * Inserts a new command.
+ */
+export async function insertCommand(command: Command): Promise<boolean> {
+  const result = await collections.commands?.insertOne(command);
+  return result?.acknowledged || false;
+}
+
+/**
+ * Updates an existing command.
  */
 export async function updateCommand(command: Command): Promise<boolean> {
   const result = await collections.commands?.updateOne(
@@ -28,8 +47,7 @@ export async function updateCommand(command: Command): Promise<boolean> {
     },
     {
       $set: command,
-    },
-    { upsert: true }
+    }
   );
   return result?.acknowledged || false;
 }
@@ -52,5 +70,5 @@ export async function deleteCommand(
   trigger: string
 ): Promise<boolean> {
   const result = await collections.commands?.deleteOne({ channelId, trigger });
-  return result?.acknowledged || false;
+  return result === undefined ? false : result.deletedCount > 0;
 }

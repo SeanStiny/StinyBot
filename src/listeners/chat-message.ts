@@ -3,7 +3,7 @@ import { adminCommands, botCommands } from '../commands';
 import { chat } from '../chat';
 import { config } from '../config';
 import { logger } from '../logger';
-import { findCommand } from '../models/command';
+import { findCommand, updateCommand } from '../models/command';
 import { parseResponse } from '../response';
 import { commandVariables } from '../variables';
 
@@ -47,6 +47,12 @@ export async function chatMessage(
     const botCommand = botCommands[args[0]];
     if (botCommand && (userIsBroadcaster || userIsMod)) {
       response = await botCommand(args, channel, userstate, message);
+
+      if (response === undefined) {
+        response =
+          `@${userstate['display-name']} I'm sorry, something went wrong. ` +
+          'Try again! If the problem persists, seek help.';
+      }
     } else {
       // User commands
       const channelId = parseInt(userstate['room-id'] || '-1');
@@ -55,15 +61,23 @@ export async function chatMessage(
       if (command !== null) {
         const userHasPermission =
           userIsBroadcaster ||
-          (!command.opts?.isMod &&
-            !command.opts?.isSub &&
-            !command.opts?.isVip) ||
-          (command.opts?.isMod && userIsMod) ||
-          (command.opts?.isVip && userIsVip) ||
-          (command.opts?.isSub && userIsSub);
-        if (userHasPermission) {
+          (!command.flags?.isMod &&
+            !command.flags?.isSub &&
+            !command.flags?.isVip) ||
+          (command.flags?.isMod && userIsMod) ||
+          (command.flags?.isVip && userIsVip) ||
+          (command.flags?.isSub && userIsSub);
+
+        const cooldownOver =
+          !command.lastUsed ||
+          !command.flags?.cooldown ||
+          (Date.now() - command.lastUsed) / 1000 > command.flags.cooldown;
+
+        if (userHasPermission && cooldownOver) {
           const variables = commandVariables(channel, userstate, message);
           response = await parseResponse(command.response, variables);
+          command.lastUsed = Date.now();
+          updateCommand(command);
         }
       }
     }

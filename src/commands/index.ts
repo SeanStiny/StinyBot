@@ -1,11 +1,16 @@
 import { ChatUserstate } from 'tmi.js';
+import { add } from './add';
 import { join } from './join';
 import { leave } from './leave';
+import { remove } from './remove';
 
 /**
  * Built-in commands that can be called from a user's chat.
  */
-export const botCommands: Record<string, BuiltInCommand> = {};
+export const botCommands: Record<string, BuiltInCommand> = {
+  '!add': add,
+  '!remove': remove,
+};
 
 /**
  * Built-in commands that can be performed from the bot's own chat.
@@ -23,4 +28,4 @@ export type BuiltInCommand = (
   channel: string,
   userstate: ChatUserstate,
   message: string
-) => Promise<string>;
+) => Promise<string | undefined>;
