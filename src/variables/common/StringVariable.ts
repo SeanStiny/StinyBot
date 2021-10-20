@@ -1,4 +1,4 @@
-import { Variable } from '.';
+import { Variable } from '..';
 
 export class StringVariable implements Variable {
   constructor(private str: string) {}

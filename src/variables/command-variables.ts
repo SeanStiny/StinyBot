@@ -1,23 +1,23 @@
 import { ChatUserstate } from 'tmi.js';
 import { Variable } from '.';
-import { ChannelGameVariable } from './ChannelGameVariable';
-import { ChannelLanguageVariable } from './ChannelLanguageVariable';
-import { ChannelNameVariable } from './ChannelNameVariable';
-import { ChannelTitleVariable } from './ChannelTitleVariable';
-import { Splat2ModeVariable } from './Splat2ModeVariable';
-import { Splat2SalmonStageVariable } from './Splat2SalmonStageVariable';
-import { Splat2SalmonStatusVariable } from './Splat2SalmonStatusVariable';
-import { Splat2SalmonTimeVariable } from './Splat2SalmonTimeVariable';
-import { Splat2SalmonWeaponVariable } from './Splat2SalmonWeaponVariable';
-import { Splat2StageVariable } from './Splat2StageVariable';
-import { StreamUptimeVariable } from './StreamUptimeVariable';
-import { StreamVariable } from './StreamVariable';
-import { StringVariable } from './StringVariable';
-import { UserGameVariable } from './UserGameVariable';
-import { UserLanguageVariable } from './UserLanguageVariable';
-import { UserLoginVariable } from './UserLoginVariable';
-import { UserNameVariable } from './UserNameVariable';
-import { UserTitleVariable } from './UserTitleVariable';
+import { ChannelGameVariable } from './twitch/ChannelGameVariable';
+import { ChannelLanguageVariable } from './twitch/ChannelLanguageVariable';
+import { ChannelNameVariable } from './twitch/ChannelNameVariable';
+import { ChannelTitleVariable } from './twitch/ChannelTitleVariable';
+import { Splat2ModeVariable } from './splatoon2/Splat2ModeVariable';
+import { Splat2SalmonStageVariable } from './splatoon2/Splat2SalmonStageVariable';
+import { Splat2SalmonStatusVariable } from './splatoon2/Splat2SalmonStatusVariable';
+import { Splat2SalmonTimeVariable } from './splatoon2/Splat2SalmonTimeVariable';
+import { Splat2SalmonWeaponVariable } from './splatoon2/Splat2SalmonWeaponVariable';
+import { Splat2StageVariable } from './splatoon2/Splat2StageVariable';
+import { StreamUptimeVariable } from './twitch/StreamUptimeVariable';
+import { StreamVariable } from './twitch/StreamVariable';
+import { StringVariable } from './common/StringVariable';
+import { UserGameVariable } from './twitch/UserGameVariable';
+import { UserLanguageVariable } from './twitch/UserLanguageVariable';
+import { UserLoginVariable } from './twitch/UserLoginVariable';
+import { UserNameVariable } from './twitch/UserNameVariable';
+import { UserTitleVariable } from './twitch/UserTitleVariable';
 
 export function commandVariables(
   channel: string,
