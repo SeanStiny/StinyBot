@@ -1,5 +1,5 @@
-import { CommandFlags } from '../models/command';
-import { isInteger } from '../utils/is-integer';
+import { CommandFlags } from '../../models/command';
+import { isInteger } from '../../utils/is-integer';
 
 /**
  * Parse the command flags.
