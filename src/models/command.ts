@@ -5,13 +5,13 @@ import { collections } from '../database';
  * A chat command that performs an action when triggered.
  */
 export class Command {
+  public flags?: CommandFlags;
   public lastUsed?: number;
 
   constructor(
     public channelId: number,
     public trigger: string,
     public response: string,
-    public flags?: CommandFlags,
     public _id?: ObjectId
   ) {
     this.trigger = trigger.toLowerCase();

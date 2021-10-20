@@ -76,15 +76,17 @@ export async function chatMessage(
         if (userHasPermission && cooldownOver) {
           const variables = commandVariables(channel, userstate, message);
           response = await parseResponse(command.response, variables);
-          command.lastUsed = Date.now();
-          updateCommand(command);
+          if (response.length > 0) {
+            command.lastUsed = Date.now();
+            updateCommand(command);
+          }
         }
       }
     }
   }
 
   // Respond to a command in chat.
-  if (response) {
+  if (response && response.length > 0) {
     chat.say(channel, `/me ${response}`);
   }
 }

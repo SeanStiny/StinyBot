@@ -1,8 +1,8 @@
 import { MongoServerError } from 'mongodb';
 import { BuiltInCommand } from '.';
 import { logger } from '../logger';
-import { Command, CommandFlags, insertCommand } from '../models/command';
-import { isInteger } from '../utils/is-integer';
+import { Command, insertCommand } from '../models/command';
+import { parseFlags } from './parse-flags';
 
 /**
  * Example usage.
@@ -32,7 +32,8 @@ export const add: BuiltInCommand = async (args, channel, userstate) => {
             if (trigger && commandResponse) {
               const channelId = parseInt(userstate['room-id']);
               const command = new Command(channelId, trigger, commandResponse);
-              if (flags) {
+
+              if (Object.keys(flags).length > 0) {
                 command.flags = flags;
               }
 
@@ -78,46 +79,3 @@ export const add: BuiltInCommand = async (args, channel, userstate) => {
 
   return response;
 };
-
-/**
- * Parse the command flags.
- * @returns a tuple containing the flags and remaining arguments.
- */
-function parseFlags(args: string[]): [CommandFlags, string[]] {
-  const flags: CommandFlags = {};
-
-  let i = 3;
-  let stillFlags = true;
-  while (stillFlags) {
-    if (args[i] !== undefined && args[i].charAt(0) === '-') {
-      const [flag, value] = args[i].substring(1).split('=', 2);
-
-      switch (flag) {
-        case 'mod':
-          flags.isMod = true;
-          break;
-
-        case 'vip':
-          flags.isVip = true;
-          break;
-
-        case 'sub':
-          flags.isSub = true;
-          break;
-
-        case 'cd':
-        case 'cooldown':
-          if (isInteger(value)) {
-            flags.cooldown = Math.max(parseInt(value), 5);
-          }
-          break;
-      }
-
-      i++;
-    } else {
-      stillFlags = false;
-    }
-  }
-
-  return [flags, args.slice(i)];
-}

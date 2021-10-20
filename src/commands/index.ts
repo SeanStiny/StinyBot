@@ -1,5 +1,6 @@
 import { ChatUserstate } from 'tmi.js';
 import { add } from './add';
+import { edit } from './edit';
 import { join } from './join';
 import { leave } from './leave';
 import { remove } from './remove';
@@ -10,6 +11,7 @@ import { remove } from './remove';
 export const botCommands: Record<string, BuiltInCommand> = {
   '!add': add,
   '!remove': remove,
+  '!edit': edit,
 };
 
 /**
