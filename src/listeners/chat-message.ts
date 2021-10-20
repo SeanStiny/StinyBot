@@ -61,17 +61,15 @@ export async function chatMessage(
       if (command !== null) {
         const userHasPermission =
           userIsBroadcaster ||
-          (!command.flags?.isMod &&
-            !command.flags?.isSub &&
-            !command.flags?.isVip) ||
-          (command.flags?.isMod && userIsMod) ||
-          (command.flags?.isVip && userIsVip) ||
-          (command.flags?.isSub && userIsSub);
+          (!command.isMod && !command.isSub && !command.isVip) ||
+          (command.isMod && userIsMod) ||
+          (command.isVip && userIsVip) ||
+          (command.isSub && userIsSub);
 
         const cooldownOver =
           !command.lastUsed ||
-          !command.flags?.cooldown ||
-          (Date.now() - command.lastUsed) / 1000 > command.flags.cooldown;
+          !command.cooldown ||
+          (Date.now() - command.lastUsed) / 1000 > command.cooldown;
 
         if (userHasPermission && cooldownOver) {
           const variables = commandVariables(channel, userstate, message);

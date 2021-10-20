@@ -30,4 +30,4 @@ export type BuiltInCommand = (
   channel: string,
   userstate: ChatUserstate,
   message: string
-) => Promise<string | undefined>;
+) => Promise<string>;

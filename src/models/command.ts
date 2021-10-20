@@ -5,8 +5,11 @@ import { collections } from '../database';
  * A chat command that performs an action when triggered.
  */
 export class Command {
-  public flags?: CommandFlags;
-  public lastUsed?: number;
+  isMod: boolean;
+  isVip: boolean;
+  isSub: boolean;
+  cooldown: number;
+  lastUsed?: number;
 
   constructor(
     public channelId: number,
@@ -15,17 +18,11 @@ export class Command {
     public _id?: ObjectId
   ) {
     this.trigger = trigger.toLowerCase();
+    this.isMod = false;
+    this.isVip = false;
+    this.isSub = false;
+    this.cooldown = 5;
   }
-}
-
-/**
- * Command flags.
- */
-export interface CommandFlags {
-  isMod?: boolean;
-  isVip?: boolean;
-  isSub?: boolean;
-  cooldown?: number;
 }
 
 /**

@@ -3,15 +3,15 @@ import { Variable } from './variables';
 
 /**
  * @param input The unparsed response string.
- * @param variables The variable context to evaluate values from.
+ * @param vars The variable context to evaluate values from.
  * @returns The parsed response with variables evaluated and replaced.
  */
 export async function parseResponse(
   input: string,
-  variables: Record<string, Variable>
+  vars: Record<string, Variable>
 ): Promise<string> {
   const tokens = tokenize(input);
-  return await parseTokens(tokens, variables);
+  return await parseTokens(tokens, vars);
 }
 
 /**
@@ -20,7 +20,7 @@ export async function parseResponse(
  */
 async function parseTokens(
   tokens: Token[],
-  variables: Record<string, Variable>
+  vars: Record<string, Variable>
 ): Promise<string> {
   let output = '';
 
@@ -31,16 +31,16 @@ async function parseTokens(
     if (token.kind === 'text') {
       value = token.text;
     } else if (token.kind === 'variable') {
-      const key = await parseTokens(token.tokens, variables);
-      const variable = variables[key.toLowerCase()];
+      const key = await parseTokens(token.tokens, vars);
+      const variable = vars[key.toLowerCase()];
       if (variable) {
         value = await variable.fetchValue();
       }
     } else if (token.kind === 'conditional') {
-      const operandOne = await parseTokens(token.operandOne, variables);
-      const operandTwo = await parseTokens(token.operandTwo, variables);
-      const resultTrue = await parseTokens(token.resultTrue, variables);
-      const resultFalse = await parseTokens(token.resultFalse, variables);
+      const operandOne = await parseTokens(token.operandOne, vars);
+      const operandTwo = await parseTokens(token.operandTwo, vars);
+      const resultTrue = await parseTokens(token.resultTrue, vars);
+      const resultFalse = await parseTokens(token.resultFalse, vars);
       if (operandOne.toLowerCase() === operandTwo.toLowerCase()) {
         value = resultTrue;
       } else {
