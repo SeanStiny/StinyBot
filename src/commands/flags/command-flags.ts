@@ -2,7 +2,7 @@ import { Command } from '../../models/command';
 import { isInteger } from '../../utils/is-integer';
 
 /**
- * Apply the supplied flags to the new command.
+ * Apply the supplied flags to the command.
  */
 export function applyCommandFlags(
   flags: Record<string, string>,

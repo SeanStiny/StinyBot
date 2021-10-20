@@ -13,41 +13,31 @@ const EXAMPLE = '!add !hello command Hello, chat.';
  */
 export async function addCommand(
   args: string[],
-  channelId: number,
-  user: string
-): Promise<string> {
+  channelId: number
+): Promise<string | undefined> {
   const trigger = args[1];
+  const [flags, remainingArgs] = parseFlags(args.slice(3));
+  const commandResponse = remainingArgs.join(' ');
 
-  if (trigger) {
-    const [flags, remainingArgs] = parseFlags(args.slice(3));
-    const commandResponse = remainingArgs.join(' ');
+  if (commandResponse.length > 0) {
+    if (trigger && commandResponse) {
+      const command = new Command(channelId, trigger, commandResponse);
 
-    if (commandResponse.length > 0) {
-      if (trigger && commandResponse) {
-        const command = new Command(channelId, trigger, commandResponse);
+      applyCommandFlags(flags, command);
 
-        applyCommandFlags(flags, command);
-
-        try {
-          const created = await insertCommand(command);
-          if (created) {
-            return `@${user} Successfully added the ${command.trigger} command.`;
-          }
-        } catch (reason) {
-          if (reason instanceof MongoServerError && reason.code === 11000) {
-            return `@${user} The ${command.trigger} command already exists.`;
-          }
-          return `@${user} The ${command.trigger} command already exists.`;
+      try {
+        await insertCommand(command);
+        return `Successfully added the ${command.trigger} command.`;
+      } catch (reason) {
+        if (reason instanceof MongoServerError && reason.code === 11000) {
+          return `The ${command.trigger} command already exists.`;
         }
       }
     }
+  } else {
     return (
-      `@${user} You didn't specify a response for the command. ` +
+      `You didn't specify a response for the command. ` +
       `Example usage: "${EXAMPLE}"`
     );
   }
-  return (
-    `@${user} You didn't specify a trigger for the command. ` +
-    `Example usage: "${EXAMPLE}"`
-  );
 }

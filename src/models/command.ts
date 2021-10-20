@@ -28,9 +28,8 @@ export class Command {
 /**
  * Inserts a new command.
  */
-export async function insertCommand(command: Command): Promise<boolean> {
-  const result = await collections.commands?.insertOne(command);
-  return result?.acknowledged || false;
+export async function insertCommand(command: Command): Promise<void> {
+  await collections.commands?.insertOne(command);
 }
 
 /**

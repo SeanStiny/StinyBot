@@ -6,6 +6,7 @@ import { logger } from '../logger';
 import { findCommand, updateCommand } from '../models/command';
 import { parseResponse } from '../response';
 import { commandVariables } from '../variables';
+import { updateChannelLastActive } from '../models/channel';
 
 /**
  * Listen for a chat message event.
@@ -30,6 +31,9 @@ export async function chatMessage(
   const userIsSub = userstate.badges?.subscriber !== undefined;
   const inAdminChannel = channel.substring(1) === config.user;
   const args = message.split(' ');
+
+  // Mark the channel as active.
+  updateChannelLastActive(channel);
 
   // Look for and execute a chat command.
   let response: string | undefined;

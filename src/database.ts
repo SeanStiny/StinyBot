@@ -4,6 +4,7 @@ import { Channel } from './models/channel';
 import { Command } from './models/command';
 import { Splatoon2Rotation } from './models/splatoon2-rotation';
 import { Splatoon2Shift } from './models/splatoon2-salmon';
+import { Timer } from './models/timer';
 
 /**
  * The database collections.
@@ -11,6 +12,7 @@ import { Splatoon2Shift } from './models/splatoon2-salmon';
 export let collections: {
   channels?: Collection<Channel>;
   commands?: Collection<Command>;
+  timers?: Collection<Timer>;
   league?: Collection<Splatoon2Rotation>;
   ranked?: Collection<Splatoon2Rotation>;
   turf?: Collection<Splatoon2Rotation>;
@@ -30,6 +32,7 @@ export async function connectToDatabase(): Promise<void> {
   collections = {
     channels: db.collection('channels'),
     commands: db.collection('commands'),
+    timers: db.collection('timers'),
     league: db.collection('league'),
     ranked: db.collection('ranked'),
     turf: db.collection('turf'),
@@ -38,10 +41,12 @@ export async function connectToDatabase(): Promise<void> {
 
   // Create indexes
   collections.channels?.createIndex({ name: 1 }, { unique: true });
+  collections.channels?.createIndex({ lastActive: 1 }, { sparse: true });
   collections.commands?.createIndex(
     { channelId: 1, trigger: 1 },
     { unique: true }
   );
+  collections.timers?.createIndex({ channelId: 1, alias: 1 }, { unique: true });
   collections.league?.createIndex({ start_time: 1 }, { unique: true });
   collections.ranked?.createIndex({ start_time: 1 }, { unique: true });
   collections.turf?.createIndex({ start_time: 1 }, { unique: true });
