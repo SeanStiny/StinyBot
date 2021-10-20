@@ -11,7 +11,7 @@ export function parseFlags(args: string[]): [Record<string, string>, string[]] {
     const key = split[0];
     let value = split[1];
 
-    if (value.length === 0) {
+    if (value === undefined) {
       value = 'true';
     }
     flags[key] = value;
