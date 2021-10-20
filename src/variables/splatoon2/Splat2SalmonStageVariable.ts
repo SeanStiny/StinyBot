@@ -1,5 +1,5 @@
-import { Variable } from '.';
-import { findSalmon } from '../models/splatoon2-salmon';
+import { Variable } from '..';
+import { findSalmon } from '../../models/splatoon2-salmon';
 
 export class Splat2SalmonStageVariable implements Variable {
   constructor(private time: number) {}

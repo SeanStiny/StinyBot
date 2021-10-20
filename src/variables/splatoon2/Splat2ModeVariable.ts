@@ -1,5 +1,5 @@
-import { Variable } from '.';
-import { findRotation } from '../models/splatoon2-rotation';
+import { Variable } from '..';
+import { findRotation } from '../../models/splatoon2-rotation';
 
 export class Splat2ModeVariable implements Variable {
   constructor(
