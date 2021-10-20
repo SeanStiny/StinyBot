@@ -82,12 +82,12 @@ function tokenize(input: string): Token[] {
 /**
  * @returns The text token that can be evaluated later.
  */
-function consumeText(reader: StringReader): TextToken {
+function consumeText(reader: StringReader, until?: string): TextToken {
   let text = '';
   while (
     reader.remaining > 0 &&
     reader.peek(1) !== '{' &&
-    reader.peek(1) !== '}'
+    reader.peek(1) !== until
   ) {
     text += reader.consume(1);
   }
@@ -107,7 +107,7 @@ function consumeVariable(reader: StringReader): VariableToken {
     if (reader.peek(1) === '{') {
       tokens.push(consumeVariable(reader));
     } else {
-      tokens.push(consumeText(reader));
+      tokens.push(consumeText(reader, '}'));
     }
   }
 
