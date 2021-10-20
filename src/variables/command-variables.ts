@@ -86,7 +86,6 @@ export function commandVariables(
   }
 
   // Splatoon 2 variables
-  const nextRot = now + 7200000;
   vars['ranked mode'] = new Splat2ModeVariable('ranked', now);
   vars['ranked stagea'] = new Splat2StageVariable('ranked', now, 'a');
   vars['ranked stageb'] = new Splat2StageVariable('ranked', now, 'b');
@@ -95,14 +94,17 @@ export function commandVariables(
   vars['league stageb'] = new Splat2StageVariable('league', now, 'b');
   vars['turf stagea'] = new Splat2StageVariable('turf', now, 'a');
   vars['turf stageb'] = new Splat2StageVariable('turf', now, 'b');
-  vars['next ranked mode'] = new Splat2ModeVariable('ranked', nextRot);
-  vars['next ranked stagea'] = new Splat2StageVariable('ranked', nextRot, 'a');
-  vars['next ranked stageb'] = new Splat2StageVariable('ranked', nextRot, 'b');
-  vars['next league mode'] = new Splat2ModeVariable('league', nextRot);
-  vars['next league stagea'] = new Splat2StageVariable('league', nextRot, 'a');
-  vars['next league stageb'] = new Splat2StageVariable('league', nextRot, 'b');
-  vars['next turf stagea'] = new Splat2StageVariable('turf', nextRot, 'a');
-  vars['next turf stageb'] = new Splat2StageVariable('turf', nextRot, 'b');
+  for (let i = 0; i < 24; i++) {
+    const time = now + i * 3600000;
+    vars[`ranked mode ${i}`] = new Splat2ModeVariable('ranked', time);
+    vars[`ranked stagea ${i}`] = new Splat2StageVariable('ranked', time, 'a');
+    vars[`ranked stageb ${i}`] = new Splat2StageVariable('ranked', time, 'b');
+    vars[`league mode ${i}`] = new Splat2ModeVariable('league', time);
+    vars[`league stagea ${i}`] = new Splat2StageVariable('league', time, 'a');
+    vars[`league stageb ${i}`] = new Splat2StageVariable('league', time, 'b');
+    vars[`turf stagea ${i}`] = new Splat2StageVariable('turf', time, 'a');
+    vars[`turf stageb ${i}`] = new Splat2StageVariable('turf', time, 'b');
+  }
   vars['salmon'] = new Splat2SalmonStatusVariable(now);
   vars['salmon weapona'] = new Splat2SalmonWeaponVariable(now, 0);
   vars['salmon weaponb'] = new Splat2SalmonWeaponVariable(now, 1);
