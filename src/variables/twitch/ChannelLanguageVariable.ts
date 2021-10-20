@@ -1,5 +1,5 @@
-import { twitch } from '../twitch';
-import { Variable } from '.';
+import { twitch } from '../../twitch';
+import { Variable } from '../';
 
 export class ChannelLanguageVariable implements Variable {
   constructor(private channelId: number) {}
