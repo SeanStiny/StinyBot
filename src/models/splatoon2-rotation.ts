@@ -16,7 +16,7 @@ export interface Splatoon2Rotation {
     multiline_name: string;
     name: string;
   };
-  state_a: Stage;
+  stage_a: Stage;
   stage_b: Stage;
   start_time: number;
 }
@@ -28,36 +28,21 @@ interface Stage {
 }
 
 /**
- * Update a ranked rotation.
+ * Update a Splatoon 2 rotation.
  */
-export async function updateRanked(
-  rotation: Splatoon2Rotation
-): Promise<boolean> {
-  return await update(rotation, collections.ranked);
-}
-
-/**
- * Update a league rotation.
- */
-export async function updateLeague(
-  rotation: Splatoon2Rotation
-): Promise<boolean> {
-  return await update(rotation, collections.league);
-}
-
-/**
- * Update a turf rotation.
- */
-export async function updateTurf(
-  rotation: Splatoon2Rotation
-): Promise<boolean> {
-  return await update(rotation, collections.turf);
-}
-
-async function update(
+export async function updateRotation(
   rotation: Splatoon2Rotation,
-  collection?: Collection<Splatoon2Rotation>
+  mode: Mode
 ): Promise<boolean> {
+  let collection: Collection<Splatoon2Rotation> | undefined;
+  if (mode === 'league') {
+    collection = collections.league;
+  } else if (mode === 'ranked') {
+    collection = collections.ranked;
+  } else {
+    collection = collections.turf;
+  }
+
   const result = await collection?.updateOne(
     {
       start_time: rotation.start_time,
@@ -71,36 +56,22 @@ async function update(
 }
 
 /**
- * Find a command if it exists.
+ * Find a Splatoon 2 rotation.
  */
-export async function findRanked(
-  time: number
-): Promise<Splatoon2Rotation | null> {
-  return await find(time, collections.ranked);
-}
-
-/**
- * Find a command if it exists.
- */
-export async function findLeague(
-  time: number
-): Promise<Splatoon2Rotation | null> {
-  return await find(time, collections.league);
-}
-
-/**
- * Find a command if it exists.
- */
-export async function findTurf(
-  time: number
-): Promise<Splatoon2Rotation | null> {
-  return await find(time, collections.turf);
-}
-
-async function find(
+export async function findRotation(
   time: number,
-  collection?: Collection<Splatoon2Rotation>
+  mode: Mode
 ): Promise<Splatoon2Rotation | null> {
+  let collection: Collection<Splatoon2Rotation> | undefined;
+  if (mode === 'league') {
+    collection = collections.league;
+  } else if (mode === 'ranked') {
+    collection = collections.ranked;
+  } else {
+    collection = collections.turf;
+  }
+
+  time = time / 1000;
   return (
     (await collection?.findOne({
       start_time: { $lte: time },
@@ -108,3 +79,5 @@ async function find(
     })) || null
   );
 }
+
+type Mode = 'league' | 'ranked' | 'turf';
