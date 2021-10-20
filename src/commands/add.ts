@@ -2,7 +2,7 @@ import { MongoServerError } from 'mongodb';
 import { BuiltInCommand } from '.';
 import { logger } from '../logger';
 import { Command, insertCommand } from '../models/command';
-import { parseFlags } from './parse-flags';
+import { parseFlags } from './helpers/parse-flags';
 
 /**
  * Example usage.

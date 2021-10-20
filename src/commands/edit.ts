@@ -1,7 +1,7 @@
 import { BuiltInCommand } from '.';
 import { logger } from '../logger';
 import { findCommand, updateCommand } from '../models/command';
-import { parseFlags } from './parse-flags';
+import { parseFlags } from './helpers/parse-flags';
 
 /**
  * Example usage.
