@@ -75,7 +75,11 @@ interface Grizzco {
 
 function reloadTick() {
   setTimeout(() => {
-    reloadSchedule();
+    try {
+      reloadSchedule();
+    } catch (reason) {
+      logger.error(`Failed to update Splatoon 2 schedules: ${reason}`);
+    }
     reloadTick();
   }, 7200000 - (Date.now() % 7200000) + 5000).unref();
 }
