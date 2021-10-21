@@ -1,6 +1,9 @@
 import { Variable } from '..';
 import { twitch } from '../../twitch';
 
+/**
+ * Fetches the game a Twitch user has their channel set to.
+ */
 export class UserGameVariable implements Variable {
   constructor(private login: string) {
     if (login.charAt(0) === '@') {

@@ -1,6 +1,9 @@
 import { Variable } from '..';
 import { findRotation } from '../../models/splatoon2-rotation';
 
+/**
+ * A variable containing the current stage for a Splatoon 2 mode.
+ */
 export class Splat2StageVariable implements Variable {
   constructor(
     private mode: 'league' | 'ranked' | 'turf',

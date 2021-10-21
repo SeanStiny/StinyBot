@@ -1,6 +1,9 @@
 import { Variable } from '../';
 import { twitch } from '../../twitch';
 
+/**
+ * Fetches the display name of a Twitch user.
+ */
 export class UserNameVariable implements Variable {
   constructor(private login: string) {
     if (login.charAt(0) === '@') {

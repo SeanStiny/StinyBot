@@ -1,6 +1,9 @@
 import { ObjectId } from 'mongodb';
 import { collections } from '../database';
 
+/**
+ * A key-value pair belonging to a channel.
+ */
 export class DictionaryEntry {
   id?: ObjectId;
 

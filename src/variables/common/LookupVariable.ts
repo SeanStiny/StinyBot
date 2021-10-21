@@ -1,6 +1,9 @@
 import { Variable } from '..';
 import { findDictionaryEntry } from '../../models/dictionary';
 
+/**
+ * Look up a dictionary value.
+ */
 export class LookupVariable implements Variable {
   constructor(private channelId: number) {}
 

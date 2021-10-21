@@ -2,6 +2,9 @@ import ISO6391 from 'iso-639-1';
 import { Variable } from '../';
 import { twitch } from '../../twitch';
 
+/**
+ * Fetches the language a Twitch user has set their channel to.
+ */
 export class UserLanguageVariable implements Variable {
   constructor(private login: string) {
     if (login.charAt(0) === '@') {

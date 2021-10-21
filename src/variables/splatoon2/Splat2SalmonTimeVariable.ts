@@ -1,6 +1,10 @@
 import { Variable } from '..';
 import { findSalmon } from '../../models/splatoon2-salmon';
 
+/**
+ * A variable containing the time remaining until Grizzco either opens or
+ * closes.
+ */
 export class Splat2SalmonTimeVariable implements Variable {
   constructor(private time: number) {}
 

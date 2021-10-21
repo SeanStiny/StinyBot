@@ -1,6 +1,9 @@
 import { Variable } from '..';
 import { findSalmon } from '../../models/splatoon2-salmon';
 
+/**
+ * A variable containing the current or next Grizzco stage.
+ */
 export class Splat2SalmonStageVariable implements Variable {
   constructor(private time: number) {}
 

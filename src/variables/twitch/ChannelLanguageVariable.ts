@@ -1,6 +1,9 @@
 import { twitch } from '../../twitch';
 import { Variable } from '../';
 
+/**
+ * Fetches the language of a Twitch channel.
+ */
 export class ChannelLanguageVariable implements Variable {
   constructor(private channelId: number) {}
 

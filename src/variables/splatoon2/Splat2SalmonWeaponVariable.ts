@@ -1,6 +1,9 @@
 import { Variable } from '..';
 import { findSalmon } from '../../models/splatoon2-salmon';
 
+/**
+ * A variable containing one of the current Grizzco weapons.
+ */
 export class Splat2SalmonWeaponVariable implements Variable {
   constructor(private time: number, private index: number) {}
 

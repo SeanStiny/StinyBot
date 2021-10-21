@@ -1,6 +1,9 @@
 import { twitch } from '../../twitch';
 import { Variable } from '../';
 
+/**
+ * Fetches the title of a Twitch channel.
+ */
 export class ChannelTitleVariable implements Variable {
   constructor(private channelId: number) {}
 

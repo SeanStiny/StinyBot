@@ -1,6 +1,9 @@
 import { twitch } from '../../twitch';
 import { Variable } from '..';
 
+/**
+ * Fetches the game a twitch channel is playing.
+ */
 export class ChannelGameVariable implements Variable {
   constructor(private channelId: number) {}
 

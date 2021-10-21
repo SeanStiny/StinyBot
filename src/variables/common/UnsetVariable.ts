@@ -1,6 +1,9 @@
 import { Variable } from '..';
 import { deleteDictionaryEntry } from '../../models/dictionary';
 
+/**
+ * Delete a dictionary value.
+ */
 export class UnsetVariable implements Variable {
   constructor(private channelId: number) {}
 

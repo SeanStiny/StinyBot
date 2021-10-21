@@ -1,6 +1,9 @@
 import { Variable } from '..';
 import { twitch } from '../../twitch';
 
+/**
+ * Fetches the uptime of a Twitch stream.
+ */
 export class StreamUptimeVariable implements Variable {
   constructor(private login: string) {}
 

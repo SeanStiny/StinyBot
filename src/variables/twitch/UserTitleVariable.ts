@@ -1,6 +1,9 @@
 import { Variable } from '../';
 import { twitch } from '../../twitch';
 
+/**
+ * Fetches the title a Twitch user has set on their channel.
+ */
 export class UserTitleVariable implements Variable {
   constructor(private login: string) {
     if (login.charAt(0) === '@') {

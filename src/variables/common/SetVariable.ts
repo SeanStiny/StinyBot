@@ -4,6 +4,9 @@ import {
   updateDictionaryEntry,
 } from '../../models/dictionary';
 
+/**
+ * Set a dictionary value.
+ */
 export class SetVariable implements Variable {
   constructor(private channelId: number) {}
 
