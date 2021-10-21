@@ -21,6 +21,7 @@ import { UserTitleVariable } from './twitch/UserTitleVariable';
 import { LookupVariable } from './common/LookupVariable';
 import { SetVariable } from './common/SetVariable';
 import { UnsetVariable } from './common/UnsetVariable';
+import { CountVariable } from './common/CountVariable';
 
 export function commandVariables(
   channel: string,
@@ -92,6 +93,7 @@ export function commandVariables(
   vars['lookup'] = new LookupVariable(channelId);
   vars['set'] = new SetVariable(channelId);
   vars['unset'] = new UnsetVariable(channelId);
+  vars['count'] = new CountVariable(channelId);
 
   // Splatoon 2 variables
   vars['ranked mode'] = new Splat2ModeVariable('ranked', now);

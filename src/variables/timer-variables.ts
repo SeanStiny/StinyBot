@@ -1,7 +1,10 @@
 import { Variable } from '.';
 import { Timer } from '../models/timer';
+import { CountVariable } from './common/CountVariable';
 import { LookupVariable } from './common/LookupVariable';
+import { SetVariable } from './common/SetVariable';
 import { StringVariable } from './common/StringVariable';
+import { UnsetVariable } from './common/UnsetVariable';
 import { Splat2ModeVariable } from './splatoon2/Splat2ModeVariable';
 import { Splat2SalmonStageVariable } from './splatoon2/Splat2SalmonStageVariable';
 import { Splat2SalmonStatusVariable } from './splatoon2/Splat2SalmonStatusVariable';
@@ -36,6 +39,9 @@ export function timerVariables(
 
   // Dictionary variables
   vars['lookup'] = new LookupVariable(timer.channelId);
+  vars['set'] = new SetVariable(timer.channelId);
+  vars['unset'] = new UnsetVariable(timer.channelId);
+  vars['count'] = new CountVariable(timer.channelId);
 
   // Splatoon 2 variables
   vars['ranked mode'] = new Splat2ModeVariable('ranked', time);
