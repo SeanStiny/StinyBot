@@ -2,11 +2,12 @@ import { ObjectId } from 'mongodb';
 import { collections } from '../database';
 
 export class DictionaryEntry {
+  id?: ObjectId;
+
   constructor(
     public channelId: number,
     public key: string,
-    public value: string,
-    public _id?: ObjectId
+    public value: string
   ) {
     this.key = key.toLowerCase();
   }
