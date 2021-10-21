@@ -22,6 +22,8 @@ import { LookupVariable } from './common/LookupVariable';
 import { SetVariable } from './common/SetVariable';
 import { UnsetVariable } from './common/UnsetVariable';
 import { CountVariable } from './common/CountVariable';
+import { UserFollowAgeVariable } from './twitch/UserFollowAgeVariable';
+import { TargetFollowAgeVariable } from './twitch/TargetFollowAgeVariable';
 
 export function commandVariables(
   channel: string,
@@ -66,6 +68,7 @@ export function commandVariables(
 
   // Command user variables
   vars.user = new StringVariable(userstate['display-name']);
+  vars['user followage'] = new UserFollowAgeVariable(userId, channelId);
 
   // Target variables
   if (args.length > 1) {
@@ -78,6 +81,7 @@ export function commandVariables(
     vars['target title'] = new UserTitleVariable(login);
     vars['target uptime'] = new StreamUptimeVariable(login);
     vars['target stream'] = new StreamVariable(login);
+    vars['target followage'] = new TargetFollowAgeVariable(login, channelId);
   } else {
     vars.target = new StringVariable(userstate['display-name']);
     vars['target name'] = vars.target;
@@ -87,6 +91,7 @@ export function commandVariables(
     vars['target title'] = new ChannelTitleVariable(userId);
     vars['target uptime'] = new StreamUptimeVariable(userstate.username);
     vars['target stream'] = new StreamVariable(userstate.username);
+    vars['target followage'] = new UserFollowAgeVariable(userId, channelId);
   }
 
   // Dictionary variables
