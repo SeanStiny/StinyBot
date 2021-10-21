@@ -1,3 +1,4 @@
+import { logger } from './logger';
 import { StringReader } from './utils/StringReader';
 import { Variable } from './variables';
 
@@ -40,7 +41,11 @@ async function parseTokens(
       }
 
       if (variable) {
-        value = await variable.fetchValue(args);
+        try {
+          value = await variable.fetchValue(args);
+        } catch (reason) {
+          logger.error(reason);
+        }
       }
     } else if (token.kind === 'conditional') {
       const operandOne = await parseTokens(token.operandOne, vars);
