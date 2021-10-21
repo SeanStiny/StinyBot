@@ -23,7 +23,7 @@ export const unset: BuiltInCommand = async (args, channel, userstate) => {
 
       const channelId = parseInt(userstate['room-id']);
       await deleteDictionaryEntry(channelId, key);
-      response = `Successfully deleted the value of ${key}.`;
+      response = `Successfully unset ${key}.`;
     } else {
       response = `You must provide a dictionary key. Example usage: ${EXAMPLE}`;
     }

@@ -18,7 +18,9 @@ import { UserLanguageVariable } from './twitch/UserLanguageVariable';
 import { UserLoginVariable } from './twitch/UserLoginVariable';
 import { UserNameVariable } from './twitch/UserNameVariable';
 import { UserTitleVariable } from './twitch/UserTitleVariable';
-import { DictionaryVariable } from './common/DictionaryVariable';
+import { LookupVariable } from './common/LookupVariable';
+import { SetVariable } from './common/SetVariable';
+import { UnsetVariable } from './common/UnsetVariable';
 
 export function commandVariables(
   channel: string,
@@ -87,7 +89,9 @@ export function commandVariables(
   }
 
   // Dictionary variables
-  vars['lookup'] = new DictionaryVariable(channelId);
+  vars['lookup'] = new LookupVariable(channelId);
+  vars['set'] = new SetVariable(channelId);
+  vars['unset'] = new UnsetVariable(channelId);
 
   // Splatoon 2 variables
   vars['ranked mode'] = new Splat2ModeVariable('ranked', now);

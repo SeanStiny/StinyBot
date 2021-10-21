@@ -1,5 +1,6 @@
 import { Variable } from '.';
 import { Timer } from '../models/timer';
+import { LookupVariable } from './common/LookupVariable';
 import { StringVariable } from './common/StringVariable';
 import { Splat2ModeVariable } from './splatoon2/Splat2ModeVariable';
 import { Splat2SalmonStageVariable } from './splatoon2/Splat2SalmonStageVariable';
@@ -32,6 +33,9 @@ export function timerVariables(
   // Stream information variables
   vars.stream = new StreamVariable(channel);
   vars.uptime = new StreamUptimeVariable(channel);
+
+  // Dictionary variables
+  vars['lookup'] = new LookupVariable(timer.channelId);
 
   // Splatoon 2 variables
   vars['ranked mode'] = new Splat2ModeVariable('ranked', time);

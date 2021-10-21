@@ -1,7 +1,7 @@
 import { Variable } from '..';
 import { findDictionaryEntry } from '../../models/dictionary';
 
-export class DictionaryVariable implements Variable {
+export class LookupVariable implements Variable {
   constructor(private channelId: number) {}
 
   async fetchValue(args: string[]): Promise<string | undefined> {
