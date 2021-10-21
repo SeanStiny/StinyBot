@@ -77,8 +77,14 @@ export async function chatMessage(
 
         if (userHasPermission && cooldownOver) {
           const variables = commandVariables(channel, userstate, message);
-          response = await parseResponse(command.response, variables);
-          if (response.length > 0) {
+
+          try {
+            response = await parseResponse(command.response, variables);
+          } catch (reason) {
+            logger.error(`Failed to parse command: ${reason}`);
+          }
+
+          if (response && response.length > 0) {
             command.lastUsed = Date.now();
             updateCommand(command);
           }

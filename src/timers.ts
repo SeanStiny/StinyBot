@@ -1,4 +1,5 @@
 import { chat } from './chat';
+import { logger } from './logger';
 import { findActiveChannels } from './models/channel';
 import { findTimers } from './models/timer';
 import { parseResponse } from './response';
@@ -58,9 +59,15 @@ async function tick(time: number) {
         const channel = channelMap[timer.channelId];
 
         const vars = timerVariables(channel, timer, time);
-        const response = await parseResponse(timer.response, vars);
+        let response;
 
-        if (response.length > 0) {
+        try {
+          response = await parseResponse(timer.response, vars);
+        } catch (reason) {
+          logger.error(`Failed to parse timer: ${reason}`);
+        }
+
+        if (response && response.length > 0) {
           chat.say(channel, `/me ${response}`);
         }
       }
