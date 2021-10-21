@@ -4,6 +4,8 @@ import { edit } from './edit';
 import { join } from './join';
 import { leave } from './leave';
 import { remove } from './remove';
+import { set } from './set';
+import { unset } from './unset';
 
 /**
  * Built-in commands that can be called from a user's chat.
@@ -12,6 +14,8 @@ export const botCommands: Record<string, BuiltInCommand> = {
   '!add': add,
   '!remove': remove,
   '!edit': edit,
+  '!set': set,
+  '!unset': unset,
 };
 
 /**

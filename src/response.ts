@@ -31,10 +31,16 @@ async function parseTokens(
     if (token.kind === 'text') {
       value = token.text;
     } else if (token.kind === 'variable') {
-      const key = await parseTokens(token.tokens, vars);
-      const variable = vars[key.toLowerCase()];
+      const key = (await parseTokens(token.tokens, vars)).toLowerCase();
+      const args = key.split(' ');
+
+      let variable = vars[key];
+      if (!variable) {
+        variable = vars[args[0]];
+      }
+
       if (variable) {
-        value = await variable.fetchValue();
+        value = await variable.fetchValue(args);
       }
     } else if (token.kind === 'conditional') {
       const operandOne = await parseTokens(token.operandOne, vars);

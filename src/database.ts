@@ -2,6 +2,7 @@ import { Collection, MongoClient } from 'mongodb';
 import { config } from './config';
 import { Channel } from './models/channel';
 import { Command } from './models/command';
+import { DictionaryEntry } from './models/dictionary';
 import { Splatoon2Rotation } from './models/splatoon2-rotation';
 import { Splatoon2Shift } from './models/splatoon2-salmon';
 import { Timer } from './models/timer';
@@ -13,6 +14,8 @@ export let collections: {
   channels?: Collection<Channel>;
   commands?: Collection<Command>;
   timers?: Collection<Timer>;
+  dictionary?: Collection<DictionaryEntry>;
+
   league?: Collection<Splatoon2Rotation>;
   ranked?: Collection<Splatoon2Rotation>;
   turf?: Collection<Splatoon2Rotation>;
@@ -33,6 +36,8 @@ export async function connectToDatabase(): Promise<void> {
     channels: db.collection('channels'),
     commands: db.collection('commands'),
     timers: db.collection('timers'),
+    dictionary: db.collection('dictionary'),
+
     league: db.collection('league'),
     ranked: db.collection('ranked'),
     turf: db.collection('turf'),
@@ -47,6 +52,11 @@ export async function connectToDatabase(): Promise<void> {
     { unique: true }
   );
   collections.timers?.createIndex({ channelId: 1, alias: 1 }, { unique: true });
+  collections.dictionary?.createIndex(
+    { channelId: 1, key: 1 },
+    { unique: true }
+  );
+
   collections.league?.createIndex({ start_time: 1 }, { unique: true });
   collections.ranked?.createIndex({ start_time: 1 }, { unique: true });
   collections.turf?.createIndex({ start_time: 1 }, { unique: true });

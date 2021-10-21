@@ -18,6 +18,7 @@ import { UserLanguageVariable } from './twitch/UserLanguageVariable';
 import { UserLoginVariable } from './twitch/UserLoginVariable';
 import { UserNameVariable } from './twitch/UserNameVariable';
 import { UserTitleVariable } from './twitch/UserTitleVariable';
+import { DictionaryVariable } from './common/DictionaryVariable';
 
 export function commandVariables(
   channel: string,
@@ -84,6 +85,9 @@ export function commandVariables(
     vars['target uptime'] = new StreamUptimeVariable(userstate.username);
     vars['target stream'] = new StreamVariable(userstate.username);
   }
+
+  // Dictionary variables
+  vars['lookup'] = new DictionaryVariable(channelId);
 
   // Splatoon 2 variables
   vars['ranked mode'] = new Splat2ModeVariable('ranked', now);
