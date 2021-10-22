@@ -10,7 +10,7 @@ export async function parseResponse(
   input: string,
   vars: Record<string, Variable>
 ): Promise<string> {
-  const tokens = tokenize(input);
+  const tokens = tokenize(new StringReader(input));
   return await parseTokens(tokens, vars);
 }
 
@@ -64,11 +64,10 @@ async function parseTokens(
  * @returns An array of tokens representing the variables and text segments of
  *  the input.
  */
-function tokenize(input: string): Token[] {
-  const reader = new StringReader(input);
+function tokenize(reader: StringReader, until?: string): Token[] {
   const tokens: Token[] = [];
 
-  while (reader.remaining > 0) {
+  while (reader.remaining > 0 && reader.peek(1) !== until) {
     const next = reader.peek(1);
 
     if (next === '{') {
@@ -78,7 +77,7 @@ function tokenize(input: string): Token[] {
         tokens.push(consumeVariable(reader));
       }
     } else {
-      tokens.push(consumeText(reader));
+      tokens.push(consumeText(reader, until));
     }
   }
 
@@ -180,25 +179,12 @@ function consumeOperand(reader: StringReader): Token[] {
     }
   } else if (reader.peek(1) === '"' || reader.peek(1) === "'") {
     const quote = reader.consume(1);
-    const input = consumeUntil(reader, quote);
-    operand = tokenize(input);
+    operand = tokenize(reader, quote);
     reader.consume(1);
   } else {
-    const input = consumeUntil(reader, ' ');
-    operand = tokenize(input);
+    operand = tokenize(reader, ' ');
   }
   return operand;
-}
-
-/**
- * Consume characters until a specific character is reached.
- */
-function consumeUntil(reader: StringReader, until: string) {
-  let output = '';
-  while (reader.remaining > 0 && reader.peek(1) !== until) {
-    output += reader.consume(1);
-  }
-  return output;
 }
 
 interface TextToken {
