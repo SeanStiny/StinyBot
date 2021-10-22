@@ -26,8 +26,8 @@ export const config = {
   dbName: process.env.DB_NAME || 'stinybot',
 
   // Twitch
-  user: process.env.USER || `justinfan${Math.floor(Math.random() * 9999)}`,
-  pass: process.env.PASS || '',
+  user: process.env.TMI_USER || `justinfan${Math.floor(Math.random() * 9999)}`,
+  pass: process.env.TMI_PASS || '',
   clientId: process.env.CLIENT_ID || '',
   clientSecret: process.env.CLIENT_SECRET || '',
 
