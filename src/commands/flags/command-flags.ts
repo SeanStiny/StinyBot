@@ -27,7 +27,7 @@ export function applyCommandFlags(
       case 'cd':
       case 'cooldown':
         if (isInteger(value)) {
-          command.cooldown = Math.max(parseInt(value), 5);
+          command.cooldown = Math.max(parseInt(value), 0);
         }
         break;
     }
