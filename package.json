@@ -1,6 +1,6 @@
 {
   "name": "stinybot",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "A Twitch bot for twitch.tv/SeanStiny and friends.",
   "main": "dist/index.js",
   "scripts": {
