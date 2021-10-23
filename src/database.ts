@@ -1,5 +1,6 @@
 import { Collection, MongoClient } from 'mongodb';
 import { config } from './config';
+import { ApiToken } from './models/api-token';
 import { Channel } from './models/channel';
 import { Command } from './models/command';
 import { DictionaryEntry } from './models/dictionary';
@@ -16,6 +17,7 @@ export let collections: {
   commands?: Collection<Command>;
   timers?: Collection<Timer>;
   dictionary?: Collection<DictionaryEntry>;
+  apiTokens?: Collection<ApiToken>;
 
   league?: Collection<Splatoon2Rotation>;
   ranked?: Collection<Splatoon2Rotation>;
@@ -40,6 +42,7 @@ export async function connectToDatabase(): Promise<void> {
     commands: db.collection('commands'),
     timers: db.collection('timers'),
     dictionary: db.collection('dictionary'),
+    apiTokens: db.collection('api-tokens'),
 
     league: db.collection('league'),
     ranked: db.collection('ranked'),
@@ -61,6 +64,7 @@ export async function connectToDatabase(): Promise<void> {
     { channelId: 1, key: 1 },
     { unique: true }
   );
+  collections.apiTokens?.createIndex({ token: 1 }, { unique: true });
 
   collections.league?.createIndex({ start_time: 1 }, { unique: true });
   collections.ranked?.createIndex({ start_time: 1 }, { unique: true });

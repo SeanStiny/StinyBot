@@ -21,6 +21,9 @@ export const config = {
   // Logging
   logLevel: process.env.LOG_LEVEL,
 
+  // API
+  port: process.env.PORT || 3000,
+
   // Database
   dbUri: process.env.DB_URI || 'mongodb://localhost:27017',
   dbName: process.env.DB_NAME || 'stinybot',
