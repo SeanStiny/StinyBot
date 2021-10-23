@@ -1,5 +1,10 @@
 import { Variable } from '.';
 import { Timer } from '../models/timer';
+import { AcnhVillagerBirthdayVariable } from './acnh/AcnhVillagerBirthdayVariable';
+import { AcnhVillagerCatchphraseVariable } from './acnh/AcnhVillagerCatchphraseVariable';
+import { AcnhVillagerGenderVariable } from './acnh/AcnhVillagerGenderVariable';
+import { AcnhVillagerNameVariable } from './acnh/AcnhVillagerNameVariable';
+import { AcnhVillagerPersonalityVariable } from './acnh/AcnhVillagerPersonalityVariable';
 import { CountVariable } from './common/CountVariable';
 import { LookupVariable } from './common/LookupVariable';
 import { SetVariable } from './common/SetVariable';
@@ -70,6 +75,14 @@ export function timerVariables(
   vars['salmon weapond'] = new Splat2SalmonWeaponVariable(time, 3);
   vars['salmon stage'] = new Splat2SalmonStageVariable(time);
   vars['salmon time'] = new Splat2SalmonTimeVariable(time);
+
+  // ACNH variables
+  vars.villager = new AcnhVillagerNameVariable();
+  vars['villager name'] = vars.villager;
+  vars['villager birthday'] = new AcnhVillagerBirthdayVariable();
+  vars['villager phrase'] = new AcnhVillagerCatchphraseVariable();
+  vars['villager gender'] = new AcnhVillagerGenderVariable();
+  vars['villager personality'] = new AcnhVillagerPersonalityVariable();
 
   return vars;
 }

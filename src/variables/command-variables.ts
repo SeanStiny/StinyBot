@@ -24,6 +24,11 @@ import { UnsetVariable } from './common/UnsetVariable';
 import { CountVariable } from './common/CountVariable';
 import { UserFollowAgeVariable } from './twitch/UserFollowAgeVariable';
 import { TargetFollowAgeVariable } from './twitch/TargetFollowAgeVariable';
+import { AcnhVillagerNameVariable } from './acnh/AcnhVillagerNameVariable';
+import { AcnhVillagerBirthdayVariable } from './acnh/AcnhVillagerBirthdayVariable';
+import { AcnhVillagerCatchphraseVariable } from './acnh/AcnhVillagerCatchphraseVariable';
+import { AcnhVillagerGenderVariable } from './acnh/AcnhVillagerGenderVariable';
+import { AcnhVillagerPersonalityVariable } from './acnh/AcnhVillagerPersonalityVariable';
 
 export function commandVariables(
   channel: string,
@@ -127,6 +132,14 @@ export function commandVariables(
   vars['salmon weapond'] = new Splat2SalmonWeaponVariable(now, 3);
   vars['salmon stage'] = new Splat2SalmonStageVariable(now);
   vars['salmon time'] = new Splat2SalmonTimeVariable(now);
+
+  // ACNH variables
+  vars.villager = new AcnhVillagerNameVariable();
+  vars['villager name'] = vars.villager;
+  vars['villager birthday'] = new AcnhVillagerBirthdayVariable();
+  vars['villager phrase'] = new AcnhVillagerCatchphraseVariable();
+  vars['villager gender'] = new AcnhVillagerGenderVariable();
+  vars['villager personality'] = new AcnhVillagerPersonalityVariable();
 
   return vars;
 }

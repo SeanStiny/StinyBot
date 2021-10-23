@@ -36,7 +36,11 @@ async function parseTokens(
 
       let variable = vars[key];
       if (!variable) {
-        variable = vars[args[0]];
+        let i = args.length + 1;
+        while (variable === undefined && i > 1) {
+          i--;
+          variable = vars[args.slice(0, i).join(' ')];
+        }
       }
 
       if (variable) {
