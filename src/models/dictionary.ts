@@ -45,7 +45,7 @@ export async function updateDictionaryEntry(
   );
 
   if (result) {
-    return result.matchedCount > 0;
+    return result.modifiedCount > 0 || result.upsertedCount > 0;
   }
   return false;
 }
