@@ -3,4 +3,10 @@ import { apiRouter } from './api/api-routes';
 
 export const app = express();
 
-app.use('/api', apiRouter);
+// Send OK status for health checks.
+app.get('/', (req, res) => {
+  res.sendStatus(200);
+});
+
+// API routes.
+app.use('/v1', apiRouter);
