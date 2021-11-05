@@ -49,12 +49,10 @@ async function parseTokens(
     } else if (token.kind === 'conditional') {
       const operandOne = await parseTokens(token.operandOne, vars);
       const operandTwo = await parseTokens(token.operandTwo, vars);
-      const resultTrue = await parseTokens(token.resultTrue, vars);
-      const resultFalse = await parseTokens(token.resultFalse, vars);
       if (operandOne.toLowerCase() === operandTwo.toLowerCase()) {
-        value = resultTrue;
+        value = await parseTokens(token.resultTrue, vars);
       } else {
-        value = resultFalse;
+        value = await parseTokens(token.resultFalse, vars);
       }
     }
 
