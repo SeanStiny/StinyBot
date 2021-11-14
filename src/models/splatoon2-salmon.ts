@@ -15,11 +15,15 @@ export interface Splatoon2Shift {
 
 interface Weapon {
   id: string;
-  weapon: {
+  weapon?: {
     id: string;
     image: string;
     name: string;
     thumbnail: string;
+  };
+  coop_special_weapon?: {
+    image: string;
+    name: string;
   };
 }
 

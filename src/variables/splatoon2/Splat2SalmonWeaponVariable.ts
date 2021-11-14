@@ -10,7 +10,12 @@ export class Splat2SalmonWeaponVariable implements Variable {
   async fetchValue(): Promise<string | undefined> {
     const salmon = await findSalmon(this.time);
     if (salmon?.weapons) {
-      return salmon.weapons[this.index].weapon.name;
+      const weapon = salmon.weapons[this.index];
+      if (weapon.weapon) {
+        return weapon.weapon.name;
+      } else if (weapon.coop_special_weapon) {
+        return '?';
+      }
     }
   }
 }
