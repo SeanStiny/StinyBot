@@ -1,4 +1,3 @@
-import { acnh } from './acnh';
 import { app } from './app';
 import { chat } from './chat';
 import { config } from './config';
@@ -11,9 +10,6 @@ import { timers } from './timers';
 connectToDatabase()
   .then(() => {
     return reloadSchedule();
-  })
-  .then(() => {
-    return acnh.loadVillagers();
   })
   .then(() => {
     return chat.connect();

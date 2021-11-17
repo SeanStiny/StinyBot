@@ -1,21 +1,21 @@
 import { Variable } from '..';
-import { findVillager } from '../../models/villager';
+import { acnh } from '../../acnh';
 
 export class AcnhVillagerNameVariable implements Variable {
   async fetchValue(args: string[]): Promise<string> {
     let value = '';
 
-    const name = args[args.length - 1];
+    const name = args[args.length - 1].toLowerCase();
 
     if (name) {
-      const villager = await findVillager(name);
+      const villager = acnh.villagers[name];
       if (villager) {
-        const usName = villager.name['name-USen'];
-        const euName = villager.name['name-EUen'];
+        const nameUS = villager.nameUS;
+        const nameEU = villager.nameEU;
 
-        value = usName;
-        if (euName !== usName) {
-          value += ` (EU: ${euName})`;
+        value = nameUS;
+        if (nameEU !== nameUS) {
+          value += ` (EU: ${nameEU})`;
         }
       }
     }

@@ -7,7 +7,6 @@ import { DictionaryEntry } from './models/dictionary';
 import { Splatoon2Rotation } from './models/splatoon2-rotation';
 import { Splatoon2Shift } from './models/splatoon2-salmon';
 import { Timer } from './models/timer';
-import { Villager } from './models/villager';
 
 /**
  * The database collections.
@@ -23,8 +22,6 @@ export let collections: {
   ranked?: Collection<Splatoon2Rotation>;
   turf?: Collection<Splatoon2Rotation>;
   salmon?: Collection<Splatoon2Shift>;
-
-  villagers?: Collection<Villager>;
 } = {};
 
 // Set up the database client.
@@ -48,8 +45,6 @@ export async function connectToDatabase(): Promise<void> {
     ranked: db.collection('ranked'),
     turf: db.collection('turf'),
     salmon: db.collection('salmon'),
-
-    villagers: db.collection('villagers'),
   };
 
   // Create indexes
@@ -73,9 +68,4 @@ export async function connectToDatabase(): Promise<void> {
   collections.ranked?.createIndex({ end_time: -1 });
   collections.turf?.createIndex({ end_time: -1 });
   collections.salmon?.createIndex({ end_time: 1 }, { unique: true });
-
-  collections.villagers?.createIndex(
-    { 'name.name-USen': 'text', 'name.name-EUen': 'text' },
-    { unique: true }
-  );
 }

@@ -1,16 +1,16 @@
 import { Variable } from '..';
-import { findVillager } from '../../models/villager';
+import { acnh } from '../../acnh';
 
 export class AcnhVillagerBirthdayVariable implements Variable {
   async fetchValue(args: string[]): Promise<string> {
     let value = '';
 
-    const name = args[args.length - 1];
+    const name = args[args.length - 1].toLowerCase();
 
     if (name) {
-      const villager = await findVillager(name);
+      const villager = acnh.villagers[name];
       if (villager) {
-        value = villager['birthday-string'];
+        value = villager.birthday;
       }
     }
 
