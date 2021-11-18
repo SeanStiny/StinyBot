@@ -29,6 +29,7 @@ import { AcnhVillagerBirthdayVariable } from './acnh/AcnhVillagerBirthdayVariabl
 import { AcnhVillagerCatchphraseVariable } from './acnh/AcnhVillagerCatchphraseVariable';
 import { AcnhVillagerGenderVariable } from './acnh/AcnhVillagerGenderVariable';
 import { AcnhVillagerPersonalityVariable } from './acnh/AcnhVillagerPersonalityVariable';
+import { AcnhVillagerSpeciesVariable } from './acnh/AcnhVillagerSpeciesVariable';
 
 export function commandVariables(
   channel: string,
@@ -140,6 +141,7 @@ export function commandVariables(
   vars['villager phrase'] = new AcnhVillagerCatchphraseVariable();
   vars['villager gender'] = new AcnhVillagerGenderVariable();
   vars['villager personality'] = new AcnhVillagerPersonalityVariable();
+  vars['villager species'] = new AcnhVillagerSpeciesVariable();
 
   return vars;
 }

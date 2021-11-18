@@ -11,6 +11,7 @@ villagerData.forEach((entry) => {
     personality: entry.personality,
     catchphrase: entry['catch-phrase'],
     birthday: entry['birthday-string'],
+    species: entry.species,
   };
 
   villagers[villager.nameUS.toLowerCase()] = villager;
@@ -36,4 +37,5 @@ interface Villager {
   personality: string;
   catchphrase: string;
   birthday: string;
+  species: string;
 }
