@@ -21,7 +21,11 @@ function scheduleTick(): void {
   const delay = 60000 - (now % 60000);
 
   setTimeout(async () => {
-    await tick(now + delay);
+    try {
+      await tick(now + delay);
+    } catch (reason) {
+      logger.error(`An error occurred when calling timers: ${reason}`);
+    }
     scheduleTick();
   }, delay).unref();
 }
