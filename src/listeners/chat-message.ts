@@ -95,6 +95,10 @@ export async function chatMessage(
 
   // Respond to a command in chat.
   if (response && response.length > 0) {
-    chat.say(channel, `/me ${response}`);
+    if (response.charAt(0) !== '/') {
+      chat.say(channel, `/me ${response}`);
+    } else {
+      chat.say(channel, response);
+    }
   }
 }
