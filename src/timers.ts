@@ -72,7 +72,11 @@ async function tick(time: number) {
         }
 
         if (response && response.length > 0) {
-          chat.say(channel, `/me ${response}`);
+          if (response.charAt(0) !== '/') {
+            chat.say(channel, `/me ${response}`);
+          } else {
+            chat.say(channel, response);
+          }
         }
       }
     });
