@@ -3,14 +3,10 @@ import { chat } from './chat';
 import { config } from './config';
 import { connectToDatabase } from './database';
 import { logger } from './logger';
-import { reloadSchedule } from './splatoon2';
 import { timers } from './timers';
 
 // Connect to the database and chat.
 connectToDatabase()
-  .then(() => {
-    return reloadSchedule();
-  })
   .then(() => {
     return chat.connect();
   })
